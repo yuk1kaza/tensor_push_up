@@ -1,6 +1,6 @@
 # Tensor Push Up
 
-一个基于 Tensor 模型的人体动作计数项目，用于识别并统计：
+一个基于深度学习的人体动作计数项目，用于识别并统计：
 
 - 俯卧撑（Push-up）
 - 开合跳（Jumping Jack）
@@ -10,71 +10,59 @@
 ## 功能特性
 
 - 支持俯卧撑与开合跳两类动作识别
-- 支持训练数据的采集、清洗、训练与评估
+- 支持训练数据的采集、预处理、训练与评估
 - 支持实时推理（WebCam）和离线推理（视频文件）
 - 基于动作状态机进行计数，减少抖动导致的误计数
+- 内置安全验证机制，防止路径遍历和文件大小攻击
+- 自动下载和配置MediaPipe模型
 - 可扩展到更多健身动作（如深蹲、开合跳等）
 
-## 技术思路
+## 技术架构
 
-推荐采用以下两阶段方案：
+### 两阶段方案
 
-1. 姿态估计阶段
-	- 从每一帧提取人体关键点（如肩、肘、髋、膝、踝等）
-	- 将关键点标准化，构造成时序特征
+#### 1. 姿态估计阶段
+- 从每一帧提取人体关键点（33个身体关键点）
+- 将关键点标准化，构造成时序特征
+- 使用MediaPipe Tasks API（兼容0.10+版本）
+- 计算关节角度用于动作分析
 
-2. 动作识别与计数阶段
-	- 使用 Tensor 模型（例如 MLP/LSTM/1D-CNN/Transformer）预测动作类别或动作阶段
-	- 使用状态机规则进行一次完整动作的“起始 -> 结束”闭环计数
+#### 2. 动作识别与计数阶段
+- 使用LSTM+MLP混合模型预测动作类别
+- 使用状态机规则进行一次完整动作的"起始 -> 结束"闭环计数
+- 支持抗抖动机制和冷却期
 
-## 计数核心逻辑（建议）
+## 项目结构
 
-### 俯卧撑计数
-
-- 定义身体低位状态：肘角度小于某阈值，且躯干接近水平
-- 定义身体高位状态：肘角度大于某阈值
-- 当状态从高位 -> 低位 -> 高位完成一次闭环，计数 +1
-
-### 开合跳计数
-
-- 通过手臂和腿部开合动作判定
-- 监测手臂上举至水平以上 + 双脚跳开的状态
-- 监测手臂下放至身体两侧 + 双脚合拢的状态
-- 完整开合闭环后计数 +1
-
-### 抗抖动策略
-
-- 预测结果滑动窗口平滑（如最近 N 帧多数投票）
-- 状态切换设置最短持续帧数
-- 设置动作冷却帧，避免同一次动作重复计数
-
-## 项目结构（建议）
-
-可参考如下目录组织：
-
-```text
-tensor_push_up/
-├── README.md
-├── data/
-│   ├── raw/                 # 原始视频或关键点数据
-│   ├── processed/           # 预处理后的训练数据
-│   └── labels/              # 标注文件
-├── models/
-│   ├── checkpoints/         # 训练权重
-│   └── exported/            # 导出模型（onnx/tflite/saved_model）
-├── src/
-│   ├── preprocess.py        # 数据预处理
-│   ├── train.py             # 训练入口
-│   ├── evaluate.py          # 评估脚本
-│   ├── infer.py             # 推理脚本
-│   ├── counter.py           # 动作计数状态机
-│   └── utils.py             # 通用工具
-├── requirements.txt
-└── configs/
-	 └── train.yaml           # 训练配置
 ```
-
-> 当前仓库结构较简洁，你可以按上面结构逐步补齐。
+tensor_push_up/
+├── README.md              # 项目说明文档
+├── CLAUDE.md             # Claude Code开发指南
+├── requirements.txt        # Python依赖包
+├── demo.py               # 演示脚本
+├── security_audit.py      # 安全审计脚本
+├── configs/
+│   └── train.yaml       # 训练配置文件
+├── data/
+│   ├── raw/             # 原始视频数据
+│   ├── processed/        # 预处理后的训练数据
+│   └── labels/          # 标注文件
+├── models/
+│   ├── checkpoints/       # 训练权重保存目录
+│   └── exported/         # 导出模型目录
+├── logs/                # 训练日志目录
+├── src/
+│   ├── __init__.py
+│   ├── security.py        # 安全验证模块
+│   ├── pose_estimator.py # 姿态估计模块
+│   ├── model.py          # 深度学习模型定义
+│   ├── counter.py        # 动作计数状态机
+│   ├── train.py          # 训练脚本
+│   ├── evaluate.py       # 模型评估脚本
+│   ├── infer.py          # 推理脚本
+│   ├── preprocess.py     # 数据预处理脚本
+│   └── utils.py          # 通用工具函数
+```
 
 ## 环境准备
 
@@ -82,7 +70,7 @@ tensor_push_up/
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
 ```
 
 ### 2. 安装依赖
@@ -91,90 +79,164 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-如果你还没有 `requirements.txt`，建议至少包含：
-
-- tensorflow 或 pytorch（二选一）
-- opencv-python
-- numpy
-- pandas
-- scikit-learn
-- matplotlib
+主要依赖：
+- tensorflow>=2.12.0（深度学习框架）
+- opencv-python>=4.8.0（图像处理）
+- mediapipe>=0.10.0（姿态估计）
+- numpy>=1.24.0（数值计算）
+- pyyaml>=6.0（配置文件解析）
 
 ## 数据准备
 
-1. 采集俯卧撑和开合跳视频，保证：
-	- 机位相对固定
-	- 光照稳定
-	- 覆盖不同身高、体型、速度
-2. 标注数据：
-	- 动作类别（pushup / jumping_jack）
-	- 动作阶段（可选，用于更稳定计数）
-3. 划分训练集、验证集、测试集（例如 7:2:1）
+### 1. 采集视频数据
+- 记录俯卧撑和开合跳视频
+- 保证机位相对固定、光照稳定
+- 覆盖不同身高、体型、速度
+- 放入 `data/raw` 目录
 
-## 训练流程（示例）
+### 2. 数据预处理
 
 ```bash
 python src/preprocess.py --input data/raw --output data/processed
-python src/train.py --config configs/train.yaml
-python src/evaluate.py --model models/checkpoints/best.pt --data data/processed
 ```
 
-## 推理与计数（示例）
+预处理步骤：
+- 视频姿态提取
+- 关键点角度计算
+- 时序滑动窗口生成
+- 数据增强（翻转、旋转、时间拉伸）
+- 训练/验证/测试集划分
+
+## 模型训练
+
+```bash
+python src/train.py --config configs/train.yaml
+```
+
+训练配置（在`configs/train.yaml`中）：
+- 模型架构（LSTM层数、单元数）
+- 训练超参数（学习率、批量大小、轮数）
+- 数据参数（窗口大小、数据增强）
+- 早停、学习率调整、模型检查点
+
+训练后模型保存在 `models/checkpoints/` 目录。
+
+## 推理与计数
 
 ### 摄像头实时计数
 
 ```bash
-python src/infer.py --source 0 --model models/checkpoints/best.pt --task count
+python demo.py --mode count --source 0
 ```
 
 ### 视频文件计数
 
 ```bash
-python src/infer.py --source demo.mp4 --model models/checkpoints/best.pt --task count
+python demo.py --mode count --source video.mp4
 ```
 
-推理输出建议包含：
+### 姿态估计演示
 
+```bash
+python demo.py --mode pose --source 0
+```
+
+推理输出：
 - 当前动作类别
-- 当前动作阶段
 - 俯卧撑累计次数
 - 开合跳累计次数
 - 当前帧置信度
+- 实时FPS
 
-## 评估指标（建议）
+## 计数逻辑
 
-- 分类指标：Accuracy、Precision、Recall、F1
-- 计数指标：
-  - MAE（绝对误差）
-  - MAPE（相对误差）
-  - Count Accuracy（计数准确率）
-- 实时性指标：FPS、端到端延迟
+### 俯卧撑计数
+- **高位状态**：肘角度 > 150°
+- **低位状态**：肘角度 < 90°
+- **计数条件**：高位 → 低位 → 高位完成一次闭环
+- **抗抖动**：状态切换需持续3帧，计数后冷却10帧
+
+### 开合跳计数
+- **闭合状态**：双脚踝部距离 < 0.1，手腕低于肩部
+- **张开状态**：双脚踝部距离 > 0.3，手腕高于肩部
+- **计数条件**：闭合 → 张开 → 闭合完成一次闭环
+- **抗抖动**：状态切换需持续3帧，计数后冷却10帧
+
+## 安全机制
+
+项目内置以下安全验证：
+
+1. **路径验证**：防止目录遍历攻击
+   - 仅允许访问项目目录及子目录
+   - 阻止`../`、`/etc/`等危险路径
+
+2. **文件大小限制**：防止DoS攻击
+   - 视频文件最大500MB
+   - 模型文件最大100MB
+   - 配置文件最大1MB
+
+3. **文件类型验证**：
+   - 仅允许特定扩展名（.mp4, .avi, .keras等）
+
+4. **文件名清理**：防止路径注入
+
+运行安全审计：
+```bash
+python security_audit.py
+```
+
+## 评估指标
+
+### 分类指标
+- Accuracy（准确率）
+- Precision（精确率）
+- Recall（召回率）
+- F1-Score（F1分数）
+- 混淆矩阵
+
+### 计数指标
+- MAE（平均绝对误差）
+- MAPE（平均百分比误差）
+- Count Accuracy（计数准确率，±1容差）
+
+### 实时性指标
+- FPS（帧率）
+- 端到端延迟
 
 ## 常见问题
 
-### 1. 计数抖动严重
+### 1. MediaPipe模型未找到
+**现象**：首次运行时提示模型文件不存在
 
-- 增加平滑窗口长度
+**解决**：首次运行会自动从Google Cloud下载模型，需保持网络连接
+
+### 2. 计数抖动严重
+
+**解决方法**：
+- 增加`stability_frames`参数
 - 提高状态切换阈值
-- 引入阶段判别模型而非单帧分类
+- 增加平滑窗口大小
 
-### 2. 侧身或遮挡时识别不稳定
+### 3. 侧身或遮挡时识别不稳定
 
+**解决方法**：
 - 增加多视角训练样本
-- 做关键点缺失补全
-- 引入时序模型提升鲁棒性
+- 使用时序模型提升鲁棒性
+- 调整检测置信度阈值
 
-### 3. 不同速度下误差较大
+### 4. 不同速度下误差较大
 
+**解决方法**：
 - 扩充慢速/快速样本
-- 训练时引入时间拉伸增强
+- 训练时启用时间拉伸增强
 
 ## 后续优化方向
 
-- 多人场景下的目标跟踪与独立计数
-- 边缘设备部署（TFLite / TensorRT）
-- 动作质量评分（标准度分析）
-- 训练日志与可视化看板（TensorBoard / W&B）
+- [ ] 多人场景下的目标跟踪与独立计数
+- [ ] 边缘设备部署（TFLite / TensorRT）
+- [ ] 动作质量评分（标准度分析）
+- [ ] 训练日志与可视化看板
+- [ ] 支持更多运动类型（深蹲、波比跳等）
 
 ## 贡献
 
@@ -183,7 +245,8 @@ python src/infer.py --source demo.mp4 --model models/checkpoints/best.pt --task 
 - 数据处理流程
 - 模型结构与训练策略
 - 计数稳定性与实时性能
+- 文档改进
 
 ## 许可证
 
-可在此处补充项目许可证信息（如 MIT）。
+本项目仅供学习和研究使用。

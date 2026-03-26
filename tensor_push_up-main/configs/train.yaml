@@ -1,0 +1,77 @@
+# Training Configuration for Tensor Push Up Project
+
+# Model Configuration
+model:
+  name: "lstm_mlp"
+  input_shape: [30, 50]  # [window_size, features]
+  lstm_units: [128, 64]  # First and second LSTM layer units
+  dropout_rate: 0.5
+  dense_units: 32
+  num_classes: 3  # pushup, jumping_jack, other
+  learning_rate: 0.001
+
+# Data Configuration
+data:
+  window_size: 30  # Number of frames in each sequence
+  stride: 5        # Stride for sliding window
+  train_split: 0.7
+  val_split: 0.2
+  test_split: 0.1
+  batch_size: 32
+  shuffle: true
+  num_keypoints: 33
+  num_angles: 8    # Number of joint angles to calculate
+
+# Data Augmentation
+augmentation:
+  enabled: true
+  horizontal_flip_prob: 0.3
+  rotation_range: 15
+  time_stretch_prob: 0.2
+  noise_std: 0.01
+
+# Training Configuration
+training:
+  epochs: 100
+  early_stopping_patience: 15
+  early_stopping_min_delta: 0.001
+  reduce_lr_patience: 5
+  reduce_lr_factor: 0.5
+  reduce_lr_min_lr: 0.00001
+  checkpoint_monitor: "val_loss"
+  checkpoint_mode: "min"
+  use_tensorboard: true
+  tensorboard_log_dir: "logs/tensorboard"
+
+# Paths
+paths:
+  data_dir: "data/processed"
+  checkpoint_dir: "models/checkpoints"
+  export_dir: "models/exported"
+  log_dir: "logs"
+
+# Evaluation Configuration
+evaluation:
+  metrics: ["accuracy", "precision", "recall", "f1"]
+  count_tolerance: 1  # Allowed difference for count accuracy
+
+# Action Detection Thresholds
+action_thresholds:
+  pushup:
+    high_angle: 150.0  # Elbow angle for high position (degrees)
+    low_angle: 90.0    # Elbow angle for low position (degrees)
+    stability_frames: 3  # Frames to maintain state before transition
+    cooldown_frames: 10   # Frames to wait after counting
+
+  jumping_jack:
+    open_ankle_distance: 0.3  # Normalized ankle distance threshold
+    closed_ankle_distance: 0.1
+    wrist_shoulder_threshold: 0.05  # Wrist Y position relative to shoulder
+    stability_frames: 3
+    cooldown_frames: 10
+
+# Confidence Thresholds
+confidence:
+  detection_threshold: 0.5  # Minimum confidence for pose detection
+  classification_threshold: 0.6  # Minimum confidence for action classification
+  smoothing_window: 5  # Window size for result smoothing
