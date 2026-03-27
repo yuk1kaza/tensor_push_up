@@ -11,11 +11,24 @@ from tensorflow.keras import layers, models, callbacks
 import numpy as np
 from typing import Dict, Optional, Tuple, List
 import logging
+import importlib.util
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
+def _materialize_model(model: keras.Model, input_shape: Tuple[int, int]) -> None:
+    """
+    Run a dummy forward pass so subclassed models build their weights eagerly.
+
+    This avoids misleading "0 params (unbuilt)" summaries and makes shape
+    mismatches surface closer to model creation time.
+    """
+    dummy_input = tf.zeros((1,) + tuple(input_shape), dtype=tf.float32)
+    model(dummy_input, training=False)
+
+
+@keras.utils.register_keras_serializable(package="tensor_push_up")
 class ActionClassifier(keras.Model):
     """
     LSTM-based action classifier for temporal sequence classification.
@@ -45,7 +58,8 @@ class ActionClassifier(keras.Model):
         lstm_units: List[int] = [128, 64],
         dense_units: List[int] = [32, 16],
         dropout_rate: float = 0.5,
-        l2_reg: float = 0.001
+        l2_reg: float = 0.001,
+        **kwargs
     ):
         """
         Initialize the Action Classifier model.
@@ -58,7 +72,8 @@ class ActionClassifier(keras.Model):
             dropout_rate: Dropout rate
             l2_reg: L2 regularization factor
         """
-        super().__init__(name="action_classifier")
+        kwargs.setdefault("name", "action_classifier")
+        super().__init__(**kwargs)
 
         self.input_shape = input_shape
         self.num_classes = num_classes
@@ -107,7 +122,7 @@ class ActionClassifier(keras.Model):
             name='output'
         )
 
-        self.build((None,) + input_shape)
+        _materialize_model(self, input_shape)
         logger.info(f"ActionClassifier built with input shape {input_shape}")
 
     def call(self, inputs, training=False):
@@ -158,6 +173,7 @@ class ActionClassifier(keras.Model):
         super().summary(**kwargs)
 
 
+@keras.utils.register_keras_serializable(package="tensor_push_up")
 class BidirectionalActionClassifier(keras.Model):
     """
     Bidirectional LSTM action classifier for enhanced temporal modeling.
@@ -173,7 +189,8 @@ class BidirectionalActionClassifier(keras.Model):
         lstm_units: List[int] = [64, 32],
         dense_units: List[int] = [32],
         dropout_rate: float = 0.5,
-        l2_reg: float = 0.001
+        l2_reg: float = 0.001,
+        **kwargs
     ):
         """
         Initialize the Bidirectional Action Classifier.
@@ -186,7 +203,8 @@ class BidirectionalActionClassifier(keras.Model):
             dropout_rate: Dropout rate
             l2_reg: L2 regularization factor
         """
-        super().__init__(name="bidirectional_action_classifier")
+        kwargs.setdefault("name", "bidirectional_action_classifier")
+        super().__init__(**kwargs)
 
         self.input_shape = input_shape
         self.num_classes = num_classes
@@ -236,7 +254,7 @@ class BidirectionalActionClassifier(keras.Model):
             name='output'
         )
 
-        self.build((None,) + input_shape)
+        _materialize_model(self, input_shape)
         logger.info(f"BidirectionalActionClassifier built with input shape {input_shape}")
 
     def call(self, inputs, training=False):
@@ -254,6 +272,7 @@ class BidirectionalActionClassifier(keras.Model):
         return self.output_layer(x)
 
 
+@keras.utils.register_keras_serializable(package="tensor_push_up")
 class TemporalCNN(keras.Model):
     """
     1D CNN-based action classifier.
@@ -270,7 +289,8 @@ class TemporalCNN(keras.Model):
         kernel_sizes: List[int] = [3, 5, 7],
         dense_units: List[int] = [64],
         dropout_rate: float = 0.5,
-        pooling: str = 'max'
+        pooling: str = 'max',
+        **kwargs
     ):
         """
         Initialize the Temporal CNN classifier.
@@ -284,7 +304,8 @@ class TemporalCNN(keras.Model):
             dropout_rate: Dropout rate
             pooling: Pooling type ('max' or 'avg')
         """
-        super().__init__(name="temporal_cnn")
+        kwargs.setdefault("name", "temporal_cnn")
+        super().__init__(**kwargs)
 
         self.input_shape = input_shape
         self.num_classes = num_classes
@@ -342,7 +363,7 @@ class TemporalCNN(keras.Model):
             name='output'
         )
 
-        self.build((None,) + input_shape)
+        _materialize_model(self, input_shape)
         logger.info(f"TemporalCNN built with input shape {input_shape}")
 
     def call(self, inputs, training=False):
@@ -364,6 +385,7 @@ class TemporalCNN(keras.Model):
         return self.output_layer(x)
 
 
+@keras.utils.register_keras_serializable(package="tensor_push_up")
 class TransformerBlock(layers.Layer):
     """
     Transformer encoder block for attention-based modeling.
@@ -374,7 +396,8 @@ class TransformerBlock(layers.Layer):
         embed_dim: int,
         num_heads: int,
         ff_dim: int,
-        rate: float = 0.1
+        rate: float = 0.1,
+        **kwargs
     ):
         """
         Initialize Transformer block.
@@ -385,7 +408,8 @@ class TransformerBlock(layers.Layer):
             ff_dim: Feed-forward dimension
             rate: Dropout rate
         """
-        super().__init__(name="transformer_block")
+        kwargs.setdefault("name", "transformer_block")
+        super().__init__(**kwargs)
 
         self.att = layers.MultiHeadAttention(
             num_heads=num_heads,
@@ -412,6 +436,7 @@ class TransformerBlock(layers.Layer):
         return self.layernorm2(out1 + ffn_output)
 
 
+@keras.utils.register_keras_serializable(package="tensor_push_up")
 class TransformerClassifier(keras.Model):
     """
     Transformer-based action classifier.
@@ -427,7 +452,8 @@ class TransformerClassifier(keras.Model):
         ff_dim: int = 64,
         num_transformer_blocks: int = 2,
         mlp_units: List[int] = [64, 32],
-        dropout_rate: float = 0.1
+        dropout_rate: float = 0.1,
+        **kwargs
     ):
         """
         Initialize the Transformer classifier.
@@ -441,7 +467,8 @@ class TransformerClassifier(keras.Model):
             mlp_units: List of MLP layer units
             dropout_rate: Dropout rate
         """
-        super().__init__(name="transformer_classifier")
+        kwargs.setdefault("name", "transformer_classifier")
+        super().__init__(**kwargs)
 
         self.input_shape = input_shape
         self.num_classes = num_classes
@@ -489,7 +516,7 @@ class TransformerClassifier(keras.Model):
             name='output'
         )
 
-        self.build((None,) + input_shape)
+        _materialize_model(self, input_shape)
         logger.info(f"TransformerClassifier built with input shape {input_shape}")
 
     def call(self, inputs, training=False):
@@ -528,14 +555,17 @@ def create_model(
     """
     model_creators = {
         'lstm': ActionClassifier,
+        'lstm_mlp': ActionClassifier,
         'bilstm': BidirectionalActionClassifier,
         'cnn': TemporalCNN,
         'transformer': TransformerClassifier
     }
 
-    if model_type not in model_creators:
+    # Accept both 'lstm' and 'lstm' for compatibility
+    valid_model_types = ['lstm', 'lstm_mlp', 'bilstm', 'cnn', 'transformer']
+    if model_type not in valid_model_types:
         raise ValueError(f"Unknown model type: {model_type}. "
-                        f"Available: {list(model_creators.keys())}")
+                        f"Available: {valid_model_types}")
 
     model_class = model_creators[model_type]
     model = model_class(
@@ -596,7 +626,8 @@ def create_callbacks(
     tensorboard_log_dir: str = "logs/tensorboard",
     early_stopping_patience: int = 15,
     reduce_lr_patience: int = 5,
-    checkpoint_monitor: str = "val_loss"
+    checkpoint_monitor: str = "val_loss",
+    use_tensorboard: bool = True
 ) -> List[callbacks.Callback]:
     """
     Create training callbacks.
@@ -607,6 +638,7 @@ def create_callbacks(
         early_stopping_patience: Patience for early stopping
         reduce_lr_patience: Patience for learning rate reduction
         checkpoint_monitor: Metric to monitor for checkpointing
+        use_tensorboard: Whether to enable TensorBoard logging if available
 
     Returns:
         List of callbacks
@@ -647,15 +679,23 @@ def create_callbacks(
     )
     callback_list.append(reduce_lr_callback)
 
-    # TensorBoard
-    tensorboard_callback = callbacks.TensorBoard(
-        log_dir=tensorboard_log_dir,
-        histogram_freq=1,
-        update_freq='epoch'
-    )
-    callback_list.append(tensorboard_callback)
+    if use_tensorboard:
+        if importlib.util.find_spec("tensorboard") is not None:
+            tensorboard_callback = callbacks.TensorBoard(
+                log_dir=tensorboard_log_dir,
+                histogram_freq=1,
+                update_freq='epoch'
+            )
+            callback_list.append(tensorboard_callback)
+            logger.info("TensorBoard callback enabled")
+        else:
+            logger.warning(
+                "TensorBoard is not installed in the current environment. "
+                "Skipping TensorBoard callback."
+            )
 
-    logger.info(f"Created callbacks: checkpoint, early_stopping, reduce_lr, tensorboard")
+    logger.info("Created callbacks: checkpoint, early_stopping, reduce_lr%s",
+                ", tensorboard" if use_tensorboard and importlib.util.find_spec("tensorboard") is not None else "")
     return callback_list
 
 
@@ -680,8 +720,17 @@ def load_model_from_checkpoint(
     if not validate_model_file(checkpoint_path):
         raise ValueError(f"Invalid model file: {checkpoint_path}")
 
+    default_custom_objects = {
+        'ActionClassifier': ActionClassifier,
+        'BidirectionalActionClassifier': BidirectionalActionClassifier,
+        'TemporalCNN': TemporalCNN,
+        'TransformerBlock': TransformerBlock,
+        'TransformerClassifier': TransformerClassifier
+    }
+
     if custom_objects is None:
         custom_objects = {}
+    custom_objects = {**default_custom_objects, **custom_objects}
 
     try:
         model = keras.models.load_model(
@@ -716,8 +765,12 @@ def export_model(
 
     for format_name in formats:
         if format_name == 'saved_model':
-            model.save(f"{export_dir}/{model_name}")
-            logger.info(f"Exported as SavedModel to {export_dir}/{model_name}")
+            saved_model_path = f"{export_dir}/{model_name}"
+            if hasattr(model, "export"):
+                model.export(saved_model_path)
+            else:
+                model.save(saved_model_path)
+            logger.info(f"Exported as SavedModel to {saved_model_path}")
 
         elif format_name == 'h5':
             model.save(f"{export_dir}/{model_name}.h5")

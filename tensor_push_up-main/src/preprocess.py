@@ -16,12 +16,30 @@ import json
 import logging
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from tqdm import tqdm
+import logging
 
-from .pose_estimator import PoseEstimator
-from .utils import (
-    ensure_dir, get_files_by_extension, split_train_val_test,
-    Timer, ProgressTracker, setup_logging
-)
+# Set up path for both module and script usage
+import sys
+import os
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+if parent_dir not in sys.path:
+    sys.path.insert(0, parent_dir)
+
+# Use absolute imports
+try:
+    from src.pose_estimator import PoseEstimator
+    from src.utils import (
+        ensure_dir, get_files_by_extension, split_train_val_test,
+        Timer, ProgressTracker, setup_logging
+    )
+except ImportError as e:
+    # Fallback to relative imports if parent directory setup failed
+    from .pose_estimator import PoseEstimator
+    from .utils import (
+        ensure_dir, get_files_by_extension, split_train_val_test,
+        Timer, ProgressTracker, setup_logging
+    )
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -80,9 +98,11 @@ class DataPreprocessor:
         ensure_dir(os.path.join(output_dir, "metadata"))
 
         # Initialize pose estimator
+        # Use static_image_mode=True for IMAGE mode processing
         self.pose_estimator = PoseEstimator(
             min_detection_confidence=min_pose_confidence,
-            min_tracking_confidence=min_pose_confidence
+            min_tracking_confidence=min_pose_confidence,
+            static_image_mode=True
         )
 
         # Video extensions to process
@@ -508,9 +528,13 @@ class DataPreprocessor:
         This is a workaround since PoseEstimator can't be pickled.
         """
         # Initialize pose estimator in subprocess
+        # Use static_image_mode=True for IMAGE mode processing
+        # Also use model_complexity=0 (lite) for faster processing
         pose_estimator = PoseEstimator(
             min_detection_confidence=min_pose_confidence,
-            min_tracking_confidence=min_pose_confidence
+            min_tracking_confidence=min_pose_confidence,
+            static_image_mode=True,
+            model_complexity=0  # Use lite model for speed
         )
 
         video_name = os.path.basename(video_path)

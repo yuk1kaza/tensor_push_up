@@ -2,11 +2,11 @@
 
 # Model Configuration
 model:
-  name: "lstm_mlp"
-  input_shape: [30, 50]  # [window_size, features]
+  name: "lstm"
+  input_shape: [30, 32]  # [window_size, feature_dim]
   lstm_units: [128, 64]  # First and second LSTM layer units
   dropout_rate: 0.5
-  dense_units: 32
+  dense_units: [32, 16]
   num_classes: 3  # pushup, jumping_jack, other
   learning_rate: 0.001
 
@@ -33,6 +33,7 @@ augmentation:
 # Training Configuration
 training:
   epochs: 100
+  allow_single_class: false  # Keep false for real training; true is only useful for smoke tests
   early_stopping_patience: 15
   early_stopping_min_delta: 0.001
   reduce_lr_patience: 5

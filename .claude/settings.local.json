@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(pip show:*)",
+      "Bash(pip install:*)",
+      "Bash(wsl:*)",
+      "Bash(nvidia-smi:*)",
+      "Bash(pip:*)"
     ]
   }
 }

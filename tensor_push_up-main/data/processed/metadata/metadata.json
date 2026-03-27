@@ -1,0 +1,1141 @@
+[
+  {
+    "video_id": "jumping_jack1",
+    "video_name": "jumping_jack1.mp4",
+    "total_frames": 313,
+    "valid_frames": 313,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 312,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack10",
+    "video_name": "jumping_jack10.mp4",
+    "total_frames": 276,
+    "valid_frames": 275,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 275,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack11",
+    "video_name": "jumping_jack11.mp4",
+    "total_frames": 317,
+    "valid_frames": 317,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 316,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack12",
+    "video_name": "jumping_jack12.mp4",
+    "total_frames": 297,
+    "valid_frames": 296,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 296,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack13",
+    "video_name": "jumping_jack13.mp4",
+    "total_frames": 309,
+    "valid_frames": 309,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 308,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack14",
+    "video_name": "jumping_jack14.mp4",
+    "total_frames": 297,
+    "valid_frames": 296,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 296,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack15",
+    "video_name": "jumping_jack15.mp4",
+    "total_frames": 308,
+    "valid_frames": 307,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 307,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack16",
+    "video_name": "jumping_jack16.mp4",
+    "total_frames": 293,
+    "valid_frames": 293,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 292,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack17",
+    "video_name": "jumping_jack17.mp4",
+    "total_frames": 285,
+    "valid_frames": 285,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 284,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack18",
+    "video_name": "jumping_jack18.mp4",
+    "total_frames": 321,
+    "valid_frames": 321,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 320,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack19",
+    "video_name": "jumping_jack19.mp4",
+    "total_frames": 303,
+    "valid_frames": 302,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 302,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack2",
+    "video_name": "jumping_jack2.mp4",
+    "total_frames": 305,
+    "valid_frames": 304,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 304,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack20",
+    "video_name": "jumping_jack20.mp4",
+    "total_frames": 281,
+    "valid_frames": 280,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 280,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack21",
+    "video_name": "jumping_jack21.mp4",
+    "total_frames": 297,
+    "valid_frames": 296,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 296,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack22",
+    "video_name": "jumping_jack22.mp4",
+    "total_frames": 311,
+    "valid_frames": 310,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 310,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack23",
+    "video_name": "jumping_jack23.mp4",
+    "total_frames": 293,
+    "valid_frames": 292,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 292,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack24",
+    "video_name": "jumping_jack24.mp4",
+    "total_frames": 292,
+    "valid_frames": 292,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 291,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack25",
+    "video_name": "jumping_jack25.mp4",
+    "total_frames": 317,
+    "valid_frames": 316,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 316,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack26",
+    "video_name": "jumping_jack26.mp4",
+    "total_frames": 285,
+    "valid_frames": 285,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 284,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack27",
+    "video_name": "jumping_jack27.mp4",
+    "total_frames": 309,
+    "valid_frames": 309,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 308,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack28",
+    "video_name": "jumping_jack28.mp4",
+    "total_frames": 313,
+    "valid_frames": 312,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 312,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack29",
+    "video_name": "jumping_jack29.mp4",
+    "total_frames": 280,
+    "valid_frames": 279,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 279,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack3",
+    "video_name": "jumping_jack3.mp4",
+    "total_frames": 305,
+    "valid_frames": 305,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 304,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack30",
+    "video_name": "jumping_jack30.mp4",
+    "total_frames": 297,
+    "valid_frames": 297,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 296,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack31",
+    "video_name": "jumping_jack31.mp4",
+    "total_frames": 301,
+    "valid_frames": 301,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 300,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack4",
+    "video_name": "jumping_jack4.mp4",
+    "total_frames": 297,
+    "valid_frames": 296,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 296,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack5",
+    "video_name": "jumping_jack5.mp4",
+    "total_frames": 292,
+    "valid_frames": 291,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 291,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack6",
+    "video_name": "jumping_jack6.mp4",
+    "total_frames": 313,
+    "valid_frames": 312,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 312,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack7",
+    "video_name": "jumping_jack7.mp4",
+    "total_frames": 285,
+    "valid_frames": 285,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 284,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack8",
+    "video_name": "jumping_jack8.mp4",
+    "total_frames": 288,
+    "valid_frames": 288,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 287,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "jumping_jack9",
+    "video_name": "jumping_jack9.mp4",
+    "total_frames": 321,
+    "valid_frames": 321,
+    "label": {
+      "action_type": "jumping_jack",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 320,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up1",
+    "video_name": "push_up1.mp4",
+    "total_frames": 1100,
+    "valid_frames": 1067,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 1099,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up10",
+    "video_name": "push_up10.mp4",
+    "total_frames": 295,
+    "valid_frames": 295,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 294,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up11",
+    "video_name": "push_up11.mp4",
+    "total_frames": 309,
+    "valid_frames": 309,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 308,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up12",
+    "video_name": "push_up12.mp4",
+    "total_frames": 299,
+    "valid_frames": 299,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 298,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up13",
+    "video_name": "push_up13.mp4",
+    "total_frames": 313,
+    "valid_frames": 313,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 312,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up14",
+    "video_name": "push_up14.mp4",
+    "total_frames": 281,
+    "valid_frames": 281,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 280,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up15",
+    "video_name": "push_up15.mp4",
+    "total_frames": 308,
+    "valid_frames": 308,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 307,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up16",
+    "video_name": "push_up16.mp4",
+    "total_frames": 315,
+    "valid_frames": 315,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 314,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up17",
+    "video_name": "push_up17.mp4",
+    "total_frames": 302,
+    "valid_frames": 302,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 301,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up18",
+    "video_name": "push_up18.mp4",
+    "total_frames": 283,
+    "valid_frames": 283,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 282,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up19",
+    "video_name": "push_up19.mp4",
+    "total_frames": 299,
+    "valid_frames": 299,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 298,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up2",
+    "video_name": "push_up2.mp4",
+    "total_frames": 322,
+    "valid_frames": 322,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 321,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up20",
+    "video_name": "push_up20.mp4",
+    "total_frames": 352,
+    "valid_frames": 352,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 351,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up21",
+    "video_name": "push_up21.mp4",
+    "total_frames": 305,
+    "valid_frames": 305,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 304,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up22",
+    "video_name": "push_up22.mp4",
+    "total_frames": 315,
+    "valid_frames": 315,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 314,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up23",
+    "video_name": "push_up23.mp4",
+    "total_frames": 304,
+    "valid_frames": 304,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 303,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up24",
+    "video_name": "push_up24.mp4",
+    "total_frames": 290,
+    "valid_frames": 290,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 289,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up25",
+    "video_name": "push_up25.mp4",
+    "total_frames": 361,
+    "valid_frames": 361,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 360,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up26",
+    "video_name": "push_up26.mp4",
+    "total_frames": 294,
+    "valid_frames": 294,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 293,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up27",
+    "video_name": "push_up27.mp4",
+    "total_frames": 313,
+    "valid_frames": 313,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 312,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up28",
+    "video_name": "push_up28.mp4",
+    "total_frames": 314,
+    "valid_frames": 314,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 313,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up29",
+    "video_name": "push_up29.mp4",
+    "total_frames": 277,
+    "valid_frames": 277,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 276,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up3",
+    "video_name": "push_up3.mp4",
+    "total_frames": 312,
+    "valid_frames": 312,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 311,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up30",
+    "video_name": "push_up30.mp4",
+    "total_frames": 309,
+    "valid_frames": 309,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 308,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up31",
+    "video_name": "push_up31.mp4",
+    "total_frames": 318,
+    "valid_frames": 318,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 317,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up32",
+    "video_name": "push_up32.mp4",
+    "total_frames": 313,
+    "valid_frames": 313,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 312,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up33",
+    "video_name": "push_up33.mp4",
+    "total_frames": 313,
+    "valid_frames": 313,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 312,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up34",
+    "video_name": "push_up34.mp4",
+    "total_frames": 302,
+    "valid_frames": 302,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 301,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up35",
+    "video_name": "push_up35.mp4",
+    "total_frames": 292,
+    "valid_frames": 292,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 291,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up36",
+    "video_name": "push_up36.mp4",
+    "total_frames": 280,
+    "valid_frames": 280,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 279,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up4",
+    "video_name": "push_up4.mp4",
+    "total_frames": 469,
+    "valid_frames": 469,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 468,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up5",
+    "video_name": "push_up5.mp4",
+    "total_frames": 277,
+    "valid_frames": 277,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 276,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up6",
+    "video_name": "push_up6.mp4",
+    "total_frames": 319,
+    "valid_frames": 319,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 318,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up7",
+    "video_name": "push_up7.mp4",
+    "total_frames": 1019,
+    "valid_frames": 886,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 1018,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up8",
+    "video_name": "push_up8.mp4",
+    "total_frames": 304,
+    "valid_frames": 304,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 303,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  },
+  {
+    "video_id": "push_up9",
+    "video_name": "push_up9.mp4",
+    "total_frames": 308,
+    "valid_frames": 308,
+    "label": {
+      "action_type": "pushup",
+      "count": null,
+      "start_frame": 0,
+      "end_frame": 307,
+      "notes": "Auto-generated from filename. Fill in the actual repetition count if available."
+    },
+    "resolution": [
+      1280,
+      720
+    ]
+  }
+]

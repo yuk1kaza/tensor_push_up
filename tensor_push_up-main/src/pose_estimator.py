@@ -61,7 +61,7 @@ class PoseEstimator:
         self,
         min_detection_confidence: float = 0.5,
         min_tracking_confidence: float = 0.5,
-        static_image_mode: bool = False,
+        static_image_mode: bool = True,  # Default to True for preprocessing compatibility
         model_complexity: int = 1,
         model_path: Optional[str] = None
     ):
