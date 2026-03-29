@@ -267,14 +267,31 @@ class PoseEstimator:
         """
         keypoints = np.zeros((33, 4), dtype=np.float32)
 
+        landmarks = None
+
+        # Tasks API may return either:
+        # 1. an object with a `.landmarks` field, or
+        # 2. a plain sequence of landmarks.
         if hasattr(pose_landmark, 'landmarks'):
             landmarks = pose_landmark.landmarks
-            for i in range(min(33, len(landmarks))):
-                lm = landmarks[i]
-                keypoints[i, 0] = lm.x  # Normalized x coordinate (0-1)
-                keypoints[i, 1] = lm.y  # Normalized y coordinate (0-1)
-                keypoints[i, 2] = lm.z  # Normalized z coordinate
-                keypoints[i, 3] = lm.visibility if hasattr(lm, 'visibility') else 1.0
+        elif isinstance(pose_landmark, (list, tuple)):
+            landmarks = pose_landmark
+        else:
+            try:
+                landmarks = list(pose_landmark)
+            except TypeError:
+                landmarks = None
+
+        if landmarks is None:
+            logger.warning("Unexpected Tasks API landmark container: %s", type(pose_landmark).__name__)
+            return keypoints
+
+        for i in range(min(33, len(landmarks))):
+            lm = landmarks[i]
+            keypoints[i, 0] = float(getattr(lm, 'x', 0.0))
+            keypoints[i, 1] = float(getattr(lm, 'y', 0.0))
+            keypoints[i, 2] = float(getattr(lm, 'z', 0.0))
+            keypoints[i, 3] = float(getattr(lm, 'visibility', 1.0))
 
         return keypoints
 

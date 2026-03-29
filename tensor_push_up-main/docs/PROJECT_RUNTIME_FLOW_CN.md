@@ -111,3 +111,25 @@ bash scripts/train_wsl.sh
 
 这意味着现在已经可以做有意义的双类别训练。  
 如果你后续想要完整支持三分类，还需要再补充 `other` 类视频和标签。
+
+推荐的 `other` 命名方式：
+
+- `other1.mp4`
+- `other_idle_01.mp4`
+- `other_transition_01.mp4`
+
+然后执行：
+
+```bash
+python scripts/generate_labels_from_filenames.py --input data/raw --labels data/labels
+```
+
+更推荐的组织方式是直接按文件夹分：
+
+```text
+data/raw/pushup/
+data/raw/jumping_jack/
+data/raw/other/
+```
+
+现在预处理会优先按文件夹匹配类别；如果 JSON 中没有对应条目，会自动写入对应类别的 JSON 文件。

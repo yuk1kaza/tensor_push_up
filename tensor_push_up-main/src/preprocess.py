@@ -44,6 +44,18 @@ except ImportError as e:
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+ACTION_DIR_ALIASES = {
+    'pushup': {'pushup', 'push_up'},
+    'jumping_jack': {'jumping_jack', 'jumpingjack'},
+    'other': {'other'}
+}
+
+ACTION_LABEL_FILES = {
+    'pushup': 'pushup_dataset_labels.json',
+    'jumping_jack': 'jumping_jack_dataset_labels.json',
+    'other': 'other_dataset_labels.json'
+}
+
 
 class DataPreprocessor:
     """
@@ -158,6 +170,93 @@ class DataPreprocessor:
         logger.info(f"Loaded labels for {len(labels)} videos")
         return labels
 
+    def _infer_action_type(self, video_path: str) -> Optional[str]:
+        """
+        Infer action type from directory name first, then filename prefix.
+        """
+        path = Path(video_path)
+
+        for part in reversed(path.parts[:-1]):
+            lowered = part.lower()
+            for action_type, aliases in ACTION_DIR_ALIASES.items():
+                if lowered in aliases:
+                    return action_type
+
+        video_name = path.name.lower()
+        if video_name.startswith("push_up") or video_name.startswith("pushup"):
+            return "pushup"
+        if video_name.startswith("jumping_jack") or video_name.startswith("jumpingjack"):
+            return "jumping_jack"
+        if video_name.startswith("other"):
+            return "other"
+
+        return None
+
+    def _build_auto_label_record(self, video_path: str, action_type: str) -> Dict:
+        """
+        Build a placeholder label record for a video.
+        """
+        cap = cv2.VideoCapture(video_path)
+        try:
+            total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0)
+        finally:
+            cap.release()
+
+        return {
+            "action_type": action_type,
+            "count": None,
+            "start_frame": 0,
+            "end_frame": max(total_frames - 1, 0),
+            "notes": "Auto-generated during preprocessing. Fill in the real repetition count if available."
+        }
+
+    def _save_auto_generated_label(self, video_name: str, label_record: Dict):
+        """
+        Persist an auto-generated label record to the action-specific JSON file.
+        """
+        action_type = label_record["action_type"]
+        label_filename = ACTION_LABEL_FILES.get(action_type)
+        if label_filename is None:
+            return
+
+        ensure_dir(self.labels_dir)
+        label_file = Path(self.labels_dir) / label_filename
+
+        if label_file.exists():
+            existing = json.loads(label_file.read_text(encoding="utf-8"))
+        else:
+            existing = {}
+
+        existing[video_name] = label_record
+        label_file.write_text(
+            json.dumps(existing, indent=2, ensure_ascii=False),
+            encoding="utf-8"
+        )
+
+    def _ensure_video_label(self, video_path: str, labels: Dict[str, Dict]) -> Optional[Dict]:
+        """
+        Return the label for a video. If missing, auto-generate one based on
+        folder name first, then filename.
+        """
+        video_name = os.path.basename(video_path)
+        if video_name in labels:
+            return labels[video_name]
+
+        action_type = self._infer_action_type(video_path)
+        if action_type is None:
+            return None
+
+        label_record = self._build_auto_label_record(video_path, action_type)
+        self._save_auto_generated_label(video_name, label_record)
+        labels[video_name] = label_record
+
+        logger.info(
+            "Auto-generated label for %s -> %s",
+            video_name,
+            action_type
+        )
+        return label_record
+
     def extract_features_from_video(
         self,
         video_path: str,
@@ -246,6 +345,12 @@ class DataPreprocessor:
         # Convert to numpy arrays
         features_array = np.array(features_list)
         keypoints_array = np.array(keypoints_list)
+
+        if features_array.size > 0 and np.allclose(features_array, 0.0):
+            logger.warning(
+                "All extracted features are zero for %s. This usually indicates a pose extraction issue.",
+                video_name
+            )
 
         # Apply augmentation if requested
         if augment:
@@ -428,6 +533,9 @@ class DataPreprocessor:
 
         # Load labels
         labels = self.load_labels()
+
+        for video_file in video_files:
+            self._ensure_video_label(video_file, labels)
 
         # Filter by action type if specified
         if action_type:

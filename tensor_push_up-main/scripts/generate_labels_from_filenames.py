@@ -1,7 +1,13 @@
 """
-Generate label JSON files from filename prefixes.
+Generate label JSON files from directory names first, then filename prefixes.
 
 Supported naming conventions:
+- data/raw/pushup/*.mp4 -> pushup
+- data/raw/push_up/*.mp4 -> pushup
+- data/raw/jumping_jack/*.mp4 -> jumping_jack
+- data/raw/other/*.mp4 -> other
+
+Fallback filename prefixes:
 - push_up*.mp4 -> pushup
 - jumping_jack*.mp4 -> jumping_jack
 - other*.mp4 -> other
@@ -22,10 +28,10 @@ import cv2
 
 VIDEO_EXTS = {".mp4", ".avi", ".mov", ".mkv", ".webm"}
 
-PREFIX_TO_ACTION = {
-    "push_up": "pushup",
-    "jumping_jack": "jumping_jack",
-    "other": "other",
+ACTION_DIR_ALIASES = {
+    "pushup": {"pushup", "push_up"},
+    "jumping_jack": {"jumping_jack", "jumpingjack"},
+    "other": {"other"},
 }
 
 ACTION_TO_FILENAME = {
@@ -35,11 +41,20 @@ ACTION_TO_FILENAME = {
 }
 
 
-def detect_action_type(video_name: str) -> Optional[str]:
-    lowered = video_name.lower()
-    for prefix, action in PREFIX_TO_ACTION.items():
-        if lowered.startswith(prefix):
-            return action
+def detect_action_type(video_path: Path) -> Optional[str]:
+    for part in reversed(video_path.parts[:-1]):
+        lowered = part.lower()
+        for action, aliases in ACTION_DIR_ALIASES.items():
+            if lowered in aliases:
+                return action
+
+    lowered = video_path.name.lower()
+    if lowered.startswith("push_up") or lowered.startswith("pushup"):
+        return "pushup"
+    if lowered.startswith("jumping_jack") or lowered.startswith("jumpingjack"):
+        return "jumping_jack"
+    if lowered.startswith("other"):
+        return "other"
     return None
 
 
@@ -96,7 +111,7 @@ def main() -> None:
         if not video_path.is_file() or video_path.suffix.lower() not in VIDEO_EXTS:
             continue
 
-        action_type = detect_action_type(video_path.name)
+        action_type = detect_action_type(video_path)
         if action_type is None:
             continue
 

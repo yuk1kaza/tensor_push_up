@@ -188,6 +188,24 @@ python src/preprocess.py --input data/raw --output data/processed
 
 注意：如果 `data/labels` 里没有真实标注 JSON，预处理通常会把大部分样本默认标成 `other`，训练会被提前拦下。
 
+如果你想后续补 `other` 类，建议直接把视频命名成：
+
+```text
+other*.mp4
+```
+
+然后运行：
+
+```bash
+python scripts/generate_labels_from_filenames.py --input data/raw --labels data/labels
+```
+
+脚本会自动把：
+
+- `push_up*.mp4` 标成 `pushup`
+- `jumping_jack*.mp4` 标成 `jumping_jack`
+- `other*.mp4` 标成 `other`
+
 ## 8. 在 Ubuntu WSL 中开始训练
 
 正常训练：
