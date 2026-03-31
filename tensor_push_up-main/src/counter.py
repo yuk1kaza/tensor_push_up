@@ -51,11 +51,11 @@ class PushUpCounter:
 
     def __init__(
         self,
-        high_angle_threshold: float = 150.0,
-        low_angle_threshold: float = 90.0,
-        stability_frames: int = 3,
+        high_angle_threshold: float = 140.0,
+        low_angle_threshold: float = 105.0,
+        stability_frames: int = 2,
         cooldown_frames: int = 10,
-        torso_angle_threshold: float = 30.0
+        torso_angle_threshold: float = 45.0
     ):
         """
         Initialize the Push-Up Counter.
@@ -134,9 +134,10 @@ class PushUpCounter:
         right_elbow = angles.get('right_elbow', 180)
         avg_elbow = (left_elbow + right_elbow) / 2
 
-        # Check torso alignment (shoulder-hip angle relative to horizontal)
+        # Check torso alignment relative to the nearest horizontal direction.
         torso_angle = self._calculate_torso_angle(keypoints)
-        torso_straight = abs(torso_angle) < self.torso_angle_threshold
+        torso_deviation = self._calculate_horizontal_deviation(torso_angle)
+        torso_straight = torso_deviation < self.torso_angle_threshold
 
         # Update state machine
         transition = self._update_state(avg_elbow, torso_straight, frame_idx)
@@ -146,6 +147,7 @@ class PushUpCounter:
             'state': self.state.value,
             'elbow_angle': avg_elbow,
             'torso_angle': torso_angle,
+            'torso_deviation': torso_deviation,
             'torso_straight': torso_straight,
             'in_cooldown': self.current_cooldown > 0,
             'transition': transition
@@ -180,6 +182,16 @@ class PushUpCounter:
         angle = np.degrees(np.arctan2(body_vector[1], body_vector[0]))
 
         return angle
+
+    def _calculate_horizontal_deviation(self, torso_angle: float) -> float:
+        """
+        Calculate deviation from the nearest horizontal orientation.
+
+        A body line can be horizontal while pointing either left (~180 deg) or
+        right (~0 deg), so we measure distance to the nearest of those two.
+        """
+        abs_angle = abs(torso_angle)
+        return min(abs_angle, abs(180.0 - abs_angle))
 
     def _update_state(
         self,
@@ -263,8 +275,10 @@ class PushUpCounter:
                 self.state = PushUpState.HIGH
                 self.in_exercise = True
                 logger.debug(f"Push-up started at frame {frame_idx}")
-            elif self.state == PushUpState.LOW:
-                # Completing a rep: LOW -> HIGH
+            elif self.state in [PushUpState.LOW, PushUpState.TRANSITION_UP]:
+                # Completing a rep: LOW -> HIGH.
+                # In practice, most valid reps pass through a transition-up
+                # phase before reaching a stable HIGH state.
                 if frame_idx - self.last_count_frame > self.cooldown_frames:
                     self.count += 1
                     self.current_cooldown = self.cooldown_frames
@@ -317,11 +331,11 @@ class JumpingJackCounter:
 
     def __init__(
         self,
-        open_ankle_threshold: float = 0.3,
-        closed_ankle_threshold: float = 0.1,
+        open_ankle_threshold: float = 1.2,
+        closed_ankle_threshold: float = 0.5,
         wrist_shoulder_threshold: float = 0.05,
-        stability_frames: int = 3,
-        cooldown_frames: int = 10
+        stability_frames: int = 2,
+        cooldown_frames: int = 8
     ):
         """
         Initialize the Jumping Jack Counter.

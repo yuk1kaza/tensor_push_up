@@ -99,30 +99,17 @@ bash scripts/train_wsl.sh
 
 ## 当前数据现状提醒
 
-当前仓库里的数据已经推进到双类别：
+当前仓库里的数据已经推进到三类别：
 
 - [pushup_dataset_labels.json](d:/Programs/VScode/tensor_push_up-main/tensor_push_up-main/data/labels/pushup_dataset_labels.json)
 - [jumping_jack_dataset_labels.json](d:/Programs/VScode/tensor_push_up-main/tensor_push_up-main/data/labels/jumping_jack_dataset_labels.json)
+- [other_dataset_labels.json](d:/Programs/VScode/tensor_push_up-main/tensor_push_up-main/data/labels/other_dataset_labels.json)
 
-当前 `data/processed` 的标签分布已经是：
+当前 `data/processed` 的标签分布已经包含：
 
 - `pushup`
 - `jumping_jack`
-
-这意味着现在已经可以做有意义的双类别训练。  
-如果你后续想要完整支持三分类，还需要再补充 `other` 类视频和标签。
-
-推荐的 `other` 命名方式：
-
-- `other1.mp4`
-- `other_idle_01.mp4`
-- `other_transition_01.mp4`
-
-然后执行：
-
-```bash
-python scripts/generate_labels_from_filenames.py --input data/raw --labels data/labels
-```
+- `other`
 
 更推荐的组织方式是直接按文件夹分：
 
@@ -133,3 +120,16 @@ data/raw/other/
 ```
 
 现在预处理会优先按文件夹匹配类别；如果 JSON 中没有对应条目，会自动写入对应类别的 JSON 文件。
+
+## 当前推理状态
+
+当前项目已经验证通过：
+
+- 训练模型可正常加载
+- 离线视频推理可正常输出结果视频
+- 放宽后的俯卧撑计数器可以对示例视频计数
+- 放宽后的开合跳计数器也可以对示例视频计数
+
+更详细的使用方式见：
+
+- [训练后模型计数使用说明](d:/Programs/VScode/tensor_push_up-main/tensor_push_up-main/docs/INFERENCE_USAGE_CN.md)

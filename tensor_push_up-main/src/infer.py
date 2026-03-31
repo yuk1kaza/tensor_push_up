@@ -25,11 +25,21 @@ from src.model import ModelInference, get_action_class_id, get_action_class_name
 from src.utils import (
     setup_logging, VideoReader, VideoWriter,
     draw_pose_on_image, draw_text_overlay, draw_counter_display,
-    get_action_color, Timer
+    get_action_color, Timer, ProgressTracker
 )
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+DEFAULT_POSE_CONNECTIONS = [
+    (11, 12),  # Shoulders
+    (11, 13), (13, 15),  # Left arm
+    (12, 14), (14, 16),  # Right arm
+    (11, 23), (23, 25), (25, 27),  # Left side
+    (12, 24), (24, 26), (26, 28),  # Right side
+    (23, 24)  # Hips
+]
 
 
 class ActionInference:
@@ -116,8 +126,14 @@ class ActionInference:
         self.last_time = time.time()
         self.fps = 0.0
 
-        # MediaPipe connections for visualization
-        self.mp_connections = self.pose_estimator.mp_pose.POSE_CONNECTIONS
+        # MediaPipe connections for visualization.
+        # Tasks API path does not initialize `mp_pose`, so use a fallback skeleton.
+        mp_pose = getattr(self.pose_estimator, 'mp_pose', None)
+        self.mp_connections = (
+            list(mp_pose.POSE_CONNECTIONS)
+            if mp_pose is not None and hasattr(mp_pose, 'POSE_CONNECTIONS')
+            else DEFAULT_POSE_CONNECTIONS
+        )
 
         logger.info(f"ActionInference initialized with exercise_type={exercise_type}")
 

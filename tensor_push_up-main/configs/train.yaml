@@ -59,17 +59,17 @@ evaluation:
 # Action Detection Thresholds
 action_thresholds:
   pushup:
-    high_angle: 150.0  # Elbow angle for high position (degrees)
-    low_angle: 90.0    # Elbow angle for low position (degrees)
-    stability_frames: 3  # Frames to maintain state before transition
+    high_angle: 140.0  # Elbow angle for high position (degrees)
+    low_angle: 105.0   # Elbow angle for low position (degrees)
+    stability_frames: 2  # Frames to maintain state before transition
     cooldown_frames: 10   # Frames to wait after counting
 
   jumping_jack:
-    open_ankle_distance: 0.3  # Normalized ankle distance threshold
-    closed_ankle_distance: 0.1
+    open_ankle_distance: 1.2  # Normalized ankle distance threshold
+    closed_ankle_distance: 0.5
     wrist_shoulder_threshold: 0.05  # Wrist Y position relative to shoulder
-    stability_frames: 3
-    cooldown_frames: 10
+    stability_frames: 2
+    cooldown_frames: 8
 
 # Confidence Thresholds
 confidence:

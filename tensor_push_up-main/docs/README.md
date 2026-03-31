@@ -21,6 +21,7 @@ This folder contains project guides, GPU training notes, and WSL execution help.
 
 - [Quick Start](d:/Programs/VScode/tensor_push_up-main/tensor_push_up-main/docs/QUICK_START.md)
 - [项目运行流程图](d:/Programs/VScode/tensor_push_up-main/tensor_push_up-main/docs/PROJECT_RUNTIME_FLOW_CN.md)
+- [训练后模型计数使用说明](d:/Programs/VScode/tensor_push_up-main/tensor_push_up-main/docs/INFERENCE_USAGE_CN.md)
 
 ## Suggested Reading Order
 
@@ -28,3 +29,10 @@ This folder contains project guides, GPU training notes, and WSL execution help.
 2. Follow the execution plan to verify Windows, WSL2, Ubuntu, and GPU readiness.
 3. Use the scripts in `scripts/` to set up, verify, and launch training from WSL.
 4. Run a one-epoch smoke test before starting full training.
+
+## Current Highlights
+
+- Three classes are currently supported in the dataset: `pushup`, `jumping_jack`, `other`
+- The MediaPipe feature extraction bug that produced all-zero features has been fixed
+- The trained model can now be used for offline video counting
+- Push-up and jumping-jack counters have been tuned against the current dataset

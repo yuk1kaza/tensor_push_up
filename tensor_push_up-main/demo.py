@@ -119,9 +119,9 @@ def demo_pushup_counter(video_path: str = None, camera_idx: int = 0):
 
     estimator = PoseEstimator()
     counter = PushUpCounter(
-        high_angle_threshold=150.0,
-        low_angle_threshold=90.0,
-        stability_frames=3,
+        high_angle_threshold=140.0,
+        low_angle_threshold=105.0,
+        stability_frames=2,
         cooldown_frames=10
     )
 
@@ -200,10 +200,10 @@ def demo_jumping_jack_counter(video_path: str = None, camera_idx: int = 0):
 
     estimator = PoseEstimator()
     counter = JumpingJackCounter(
-        open_ankle_threshold=0.3,
-        closed_ankle_threshold=0.1,
-        stability_frames=3,
-        cooldown_frames=10
+        open_ankle_threshold=1.2,
+        closed_ankle_threshold=0.5,
+        stability_frames=2,
+        cooldown_frames=8
     )
 
     frame_idx = 0

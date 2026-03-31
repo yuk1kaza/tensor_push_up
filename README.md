@@ -29,6 +29,22 @@ TensorFlow GPU 训练，而不是继续在原生 Windows TensorFlow 环境中做
 4. 先跑一轮烟雾测试：`bash scripts/train_wsl.sh --smoke`
 5. 再执行正式训练：`bash scripts/train_wsl.sh`
 
+## Latest Status
+
+Current project status:
+
+- WSL2 GPU training pipeline is working
+- preprocessing and labeling support `pushup`, `jumping_jack`, and `other`
+- trained checkpoints can be loaded successfully
+- offline video inference can generate counted output videos
+- push-up and jumping-jack counters have been relaxed to better fit the current dataset
+
+Recommended docs:
+
+- `tensor_push_up-main/docs/README.md`
+- `tensor_push_up-main/docs/PROJECT_RUNTIME_FLOW_CN.md`
+- `tensor_push_up-main/docs/INFERENCE_USAGE_CN.md`
+
 一个基于深度学习的人体动作计数项目，用于识别并统计：
 
 - 俯卧撑（Push-up）
