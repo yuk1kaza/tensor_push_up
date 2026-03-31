@@ -1,6 +1,6 @@
 # Ubuntu WSL2 GPU 训练执行计划
 
-这是一份基于 [WSL_GPU_TRAINING_CN.md](d:/Programs/VScode/tensor_push_up-main/tensor_push_up-main/docs/WSL_GPU_TRAINING_CN.md) 的落地计划。
+这是一份基于 [WSL_GPU_TRAINING_CN.md](d:/Programs/VScode/tensor_push_up-main/tensor_push_up-main/.docs/WSL_GPU_TRAINING_CN.md) 的落地计划。
 
 目标：
 
@@ -19,8 +19,8 @@
 - `scripts/verify_wsl_gpu.sh`
 - `scripts/train_wsl.sh`
 - `scripts/train_wsl.ps1`
-- `docs/WSL_GPU_TRAINING_CN.md`
-- `docs/WSL_GPU_TRAINING.md`
+- `.docs/WSL_GPU_TRAINING_CN.md`
+- `.docs/WSL_GPU_TRAINING.md`
 
 建议你执行 plan 时，优先用这些入口，不要完全从零手敲。
 

@@ -85,7 +85,7 @@ flowchart TD
 - `models/exported/`：导出后的模型
 - `logs/`：训练日志
 - `scripts/`：WSL GPU 训练辅助脚本
-- `docs/`：训练说明、执行计划、流程图
+- `.docs/`：训练说明、执行计划、流程图
 
 ## 最常用命令
 
@@ -132,4 +132,4 @@ data/raw/other/
 
 更详细的使用方式见：
 
-- [训练后模型计数使用说明](d:/Programs/VScode/tensor_push_up-main/tensor_push_up-main/docs/INFERENCE_USAGE_CN.md)
+- [训练后模型计数使用说明](d:/Programs/VScode/tensor_push_up-main/tensor_push_up-main/.docs/INFERENCE_USAGE_CN.md)

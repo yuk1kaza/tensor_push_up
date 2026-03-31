@@ -1,0 +1,35 @@
+{
+  "train_samples": 4181,
+  "val_samples": 1194,
+  "test_samples": 599,
+  "batch_size": 32,
+  "input_shape": [
+    30,
+    32
+  ],
+  "available_label_ids": [
+    0,
+    1,
+    2
+  ],
+  "available_labels": [
+    "pushup",
+    "jumping_jack",
+    "other"
+  ],
+  "train_distribution": {
+    "pushup": 2145,
+    "jumping_jack": 1199,
+    "other": 837
+  },
+  "val_distribution": {
+    "pushup": 605,
+    "jumping_jack": 335,
+    "other": 254
+  },
+  "test_distribution": {
+    "pushup": 330,
+    "jumping_jack": 158,
+    "other": 111
+  }
+}
