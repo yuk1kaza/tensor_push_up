@@ -1,5 +1,68 @@
 # Tensor Push Up
 
+## WSL2 GPU Training
+
+项目现在已经内置了 Ubuntu WSL2 GPU 训练文档和辅助脚本，推荐在 WSL2 中完成
+TensorFlow GPU 训练，而不是继续在原生 Windows TensorFlow 环境中做 CPU-only
+训练。
+
+文档入口：
+
+- `tensor_push_up-main/.docs/DOCS_INDEX.md`
+- `tensor_push_up-main/.docs/WSL_GPU_TRAINING.md`
+- `tensor_push_up-main/.docs/WSL_GPU_TRAINING_CN.md`
+- `tensor_push_up-main/.docs/WSL_GPU_TRAINING_PLAN_CN.md`
+
+脚本入口：
+
+- `tensor_push_up-main/scripts/setup_wsl_gpu.sh`
+- `tensor_push_up-main/scripts/setup_wsl_gpu.ps1`
+- `tensor_push_up-main/scripts/verify_wsl_gpu.sh`
+- `tensor_push_up-main/scripts/train_wsl.sh`
+- `tensor_push_up-main/scripts/train_wsl.ps1`
+
+推荐执行顺序：
+
+1. 阅读 `tensor_push_up-main/docs/WSL_GPU_TRAINING_CN.md`
+2. 在 Ubuntu WSL 中执行 `bash scripts/setup_wsl_gpu.sh`
+3. 执行 `bash scripts/verify_wsl_gpu.sh`
+4. 先跑一轮烟雾测试：`bash scripts/train_wsl.sh --smoke`
+5. 再执行正式训练：`bash scripts/train_wsl.sh`
+
+## Latest Status
+
+Current project status:
+
+- WSL2 GPU training pipeline is working
+- preprocessing and labeling support `pushup`, `jumping_jack`, and `other`
+- trained checkpoints can be loaded successfully
+- offline video inference can generate counted output videos
+- push-up and jumping-jack counters have been relaxed to better fit the current dataset
+- three-class smoke training has been validated on the current dataset
+
+Recommended docs:
+
+- `tensor_push_up-main/.docs/DOCS_INDEX.md`
+- `tensor_push_up-main/.docs/PROJECT_RUNTIME_FLOW_CN.md`
+- `tensor_push_up-main/.docs/INFERENCE_USAGE_CN.md`
+- `tensor_push_up-main/.docs/Data_Requirement.md`
+
+## Quick Usage
+
+Recommended workflow:
+
+1. Put training videos into:
+   - `data/raw/pushup/`
+   - `data/raw/jumping_jack/`
+   - `data/raw/other/`
+2. Generate or update labels:
+   `python scripts/generate_labels_from_filenames.py --input data/raw --labels data/labels --overwrite`
+3. Run preprocessing:
+   `python src/preprocess.py --input data/raw --output data/processed --no-parallel`
+4. Train in WSL2:
+   `bash scripts/train_wsl.sh --venv .venv-wsl`
+5. Run offline video counting:
+   `python src/infer.py --source data/inference/pushup/test_pushup_01.mp4 --model models/checkpoints/best_model.keras --exercise pushup --output results/inference/test_pushup_01_counted.mp4`
 一个基于深度学习的人体动作计数项目，用于识别并统计：
 
 - 俯卧撑（Push-up）
