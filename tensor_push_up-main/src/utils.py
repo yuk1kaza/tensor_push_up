@@ -143,6 +143,9 @@ class VideoReader:
         if not validate_file_path(video_path):
             raise ValueError(f"Invalid video file path: {video_path}")
 
+        if not os.path.exists(video_path):
+            raise FileNotFoundError(f"Video file not found: {video_path}")
+
         # Validate video file extension
         if not validate_file_extension(video_path, ALLOWED_VIDEO_EXTENSIONS):
             raise ValueError(f"Invalid video file extension: {video_path}")

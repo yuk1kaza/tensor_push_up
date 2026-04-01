@@ -62,6 +62,9 @@ class ActionInference:
         window_size: int = 30,
         confidence_threshold: float = 0.6,
         smoothing_window: int = 5,
+        realtime_smoothing: bool = False,
+        keypoint_ema_alpha: float = 0.35,
+        angle_ema_alpha: float = 0.35,
         display_skeleton: bool = True,
         display_counter: bool = True
     ):
@@ -75,6 +78,9 @@ class ActionInference:
             window_size: Window size for temporal features
             confidence_threshold: Minimum confidence for predictions
             smoothing_window: Window size for prediction smoothing
+            realtime_smoothing: Whether to smooth pose estimates between webcam frames
+            keypoint_ema_alpha: EMA factor for keypoint smoothing in realtime mode
+            angle_ema_alpha: EMA factor for angle smoothing in realtime mode
             display_skeleton: Whether to display pose skeleton
             display_counter: Whether to display counter overlay
         """
@@ -83,11 +89,16 @@ class ActionInference:
         self.display_skeleton = display_skeleton
         self.display_counter = display_counter
         self.confidence_threshold = confidence_threshold
+        self.realtime_smoothing = realtime_smoothing
+        self.keypoint_ema_alpha = keypoint_ema_alpha
+        self.angle_ema_alpha = angle_ema_alpha
 
         # Initialize pose estimator
         self.pose_estimator = PoseEstimator(
             min_detection_confidence=0.5,
-            min_tracking_confidence=0.5
+            min_tracking_confidence=0.5,
+            static_image_mode=False,
+            model_complexity=0
         )
 
         # Initialize model if specified
@@ -121,6 +132,8 @@ class ActionInference:
         self.current_action = "None"
         self.current_confidence = 0.0
         self.frame_count = 0
+        self.smoothed_keypoints = None
+        self.smoothed_angles = None
 
         # FPS tracking
         self.last_time = time.time()
@@ -158,6 +171,9 @@ class ActionInference:
 
         # Extract pose
         keypoints, angles = self.pose_estimator.process_frame(frame)
+
+        if keypoints is not None and angles is not None and self.realtime_smoothing:
+            keypoints, angles = self._smooth_pose_estimates(keypoints, angles)
 
         # Initialize results
         results = {
@@ -231,6 +247,34 @@ class ActionInference:
         )
 
         return annotated_frame, results
+
+    def _smooth_pose_estimates(
+        self,
+        keypoints: np.ndarray,
+        angles: Dict[str, float]
+    ) -> Tuple[np.ndarray, Dict[str, float]]:
+        """
+        Smooth keypoints and angles across consecutive realtime frames.
+        """
+        if self.smoothed_keypoints is None:
+            self.smoothed_keypoints = keypoints.copy()
+        else:
+            alpha = self.keypoint_ema_alpha
+            self.smoothed_keypoints = (
+                alpha * keypoints + (1.0 - alpha) * self.smoothed_keypoints
+            )
+
+        if self.smoothed_angles is None:
+            self.smoothed_angles = dict(angles)
+        else:
+            alpha = self.angle_ema_alpha
+            for joint_name, angle in angles.items():
+                previous = self.smoothed_angles.get(joint_name, angle)
+                self.smoothed_angles[joint_name] = (
+                    alpha * angle + (1.0 - alpha) * previous
+                )
+
+        return self.smoothed_keypoints.copy(), dict(self.smoothed_angles)
 
     def _detect_action_rule_based(self, angles: Dict[str, float]) -> str:
         """
@@ -332,6 +376,8 @@ class ActionInference:
             self.counter.reset()
         self.feature_buffer.clear()
         self.frame_count = 0
+        self.smoothed_keypoints = None
+        self.smoothed_angles = None
         logger.info("Inference system reset")
 
     def close(self):
@@ -364,7 +410,8 @@ def run_webcam_inference(
     inference = ActionInference(
         model_path=model_path,
         exercise_type=exercise_type,
-        use_model=use_model
+        use_model=use_model,
+        realtime_smoothing=True
     )
 
     # Initialize video capture
@@ -372,6 +419,10 @@ def run_webcam_inference(
     if not cap.isOpened():
         logger.error(f"Failed to open camera {camera_index}")
         return
+
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+    cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
     # Get camera properties
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -591,9 +642,8 @@ def main():
     )
 
     # Input source
-    source_group = parser.add_mutually_exclusive_group(required=True)
-    source_group.add_argument("--source", type=str,
-                            help="Input source: camera index (e.g., 0) or video path")
+    parser.add_argument("--source", type=str,
+                       help="Input source: camera index (e.g., 0) or video path")
     parser.add_argument("--batch-dir", type=str,
                        help="Process all videos in directory (alternative to --source)")
 
@@ -624,6 +674,9 @@ def main():
                        help="Don't display counter overlay")
 
     args = parser.parse_args()
+
+    if not args.source and not args.batch_dir:
+        parser.error("one of the arguments --source or --batch-dir is required")
 
     # Determine if using model
     use_model = not args.no_model

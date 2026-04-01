@@ -200,6 +200,9 @@ python src/infer.py --source data/inference/jumping_jack/test_jj_01.mp4 --model 
 - 离线视频模式默认不会弹实时窗口，而是直接写出结果视频
 - 输入视频尽量使用原始视频，不要重复拿 `*_counted.mp4` 再做推理
 - 如果目标视频动作明确，优先手动指定 `--exercise`
+- `demo.py` 与 `infer.py` 的参数习惯不同：
+  - `demo.py` 打开摄像头时推荐使用 `--camera 0`
+  - `infer.py` 打开摄像头时可以使用 `--source 0`
 
 ## 当前计数规则
 

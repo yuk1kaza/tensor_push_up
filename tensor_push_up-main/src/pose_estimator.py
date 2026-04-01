@@ -11,6 +11,7 @@ import mediapipe as mp
 from typing import Tuple, Optional, List, Dict
 import logging
 import os
+import time
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -204,11 +205,14 @@ class PoseEstimator:
 
             # For video mode, we need a timestamp
             if timestamp_ms is None:
-                timestamp_ms = int(np.datetime64('now').astype('int64') // 1000000)
+                timestamp_ms = int(time.monotonic() * 1000)
 
             # Process frame
             if isinstance(self.pose, mp.tasks.vision.PoseLandmarker):
-                result = self.pose.detect(mp_image)
+                if self.static_image_mode:
+                    result = self.pose.detect(mp_image)
+                else:
+                    result = self.pose.detect_for_video(mp_image, timestamp_ms)
             else:
                 # Legacy API
                 result = self.pose.process(frame_rgb)

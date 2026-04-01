@@ -41,21 +41,21 @@ python src/evaluate.py --model models/checkpoints/best.keras --data-dir data/pro
 
 ```bash
 cd tensor_push_up-main
-python demo.py --mode count --source 0
+python demo.py --mode pushup --camera 0
 ```
 
 ### 5. 视频推理
 
 ```bash
 cd tensor_push_up-main
-python demo.py --mode count --source video.mp4
+python demo.py --mode pushup --source video.mp4
 ```
 
 ### 6. 姿态估计演示
 
 ```bash
 cd tensor_push_up-main
-python demo.py --mode pose --source 0
+python demo.py --mode pose --camera 0
 ```
 
 ## 项目目录结构

@@ -26,6 +26,23 @@ data/inference/jumping_jack/test_jj_01.mp4
 data/inference/other/test_other_01.mp4
 ```
 
+注意：
+
+- `--source` 必须写完整文件名
+- 必须包含文件扩展名，例如 `.mp4` / `.avi`
+
+正确：
+
+```text
+data/inference/jumping_jack/jackjump1.mp4
+```
+
+错误：
+
+```text
+data/inference/jumping_jack/jackjump1
+```
+
 ## 一个重要提醒
 
 请尽量使用原始输入视频，不要把之前已经导出过可视化叠字的
@@ -93,6 +110,26 @@ results/inference/test_pushup_01_counted.mp4
 ```
 
 离线视频模式默认不会弹出实时窗口，而是直接写出结果视频。
+
+## 批量处理一个文件夹中的视频
+
+如果你想把一个目录中的视频全部都跑一遍，可以使用：
+
+```powershell
+python src/infer.py --batch-dir data/inference/jumping_jack --model models/checkpoints/best_model.keras --exercise jumping_jack --output-dir results/inference/jumping_jack_batch
+```
+
+如果目录里动作混合，也可以使用：
+
+```powershell
+python src/infer.py --batch-dir data/inference --model models/checkpoints/best_model.keras --exercise auto --output-dir results/inference/batch_auto
+```
+
+说明：
+
+- 现在 `--batch-dir` 模式已经可以单独使用
+- 不再错误地强制要求 `--source`
+- 批量模式会逐个视频处理，并在 `--output-dir` 下写出结果视频与 `batch_results.json`
 
 ## 当前建议
 
